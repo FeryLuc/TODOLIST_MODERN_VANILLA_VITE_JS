@@ -1,0 +1,11 @@
+.todolist {
+  list-style-type: circle;
+}
+
+.todlist li::marker {
+  font-size: 1.5em;
+  color: red;
+}
+h1 {
+  color: orangered;
+}

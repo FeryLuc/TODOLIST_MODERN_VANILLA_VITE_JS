@@ -1,0 +1,12 @@
+.todoContent {
+  color: purple;
+  font-size: 2em;
+}
+.todoCompleted {
+  color: green;
+  font-size: 4em;
+}
+.todoId {
+  font-size: 8em;
+  text-decoration: underline;
+}
