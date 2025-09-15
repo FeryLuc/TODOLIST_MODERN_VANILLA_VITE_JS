@@ -1,3 +1,4 @@
+import './style.css';
 import Todolist from './components/todolist/Todolist.js';
 
 new Todolist({

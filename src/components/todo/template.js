@@ -1,4 +1,13 @@
 import './style.css';
 export default function getTemplate(todo) {
-  return `<li><span class="todoId">${todo.id}</span>: <span class="todoContent">${todo.content}</span> --- <span class="todoCompleted">${todo.completed}</span></li>`;
+  return `<li data-id="1" class="${todo.completed ? 'completed' : ''}">
+            <div class="view">
+              <input class="toggle" type="checkbox" ${
+                todo.completed ? 'checked' : ''
+              } />
+              <label>${todo.content}</label>
+              <button class="destroy"></button>
+            </div>
+            <input class="edit" value="${todo.content}"/>
+          </li>`;
 }
