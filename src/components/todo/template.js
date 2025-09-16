@@ -6,7 +6,9 @@ export default function getTemplate(todo) {
                 todo.completed ? 'checked' : ''
               } />
               <label>${todo.content}</label>
-              <button class="destroy"></button>
+              <button class="destroy" onclick="window.todolist.deleteTodo(${
+                todo.id
+              })"></button>
             </div>
             <input class="edit" value="${todo.content}"/>
           </li>`;

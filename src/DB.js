@@ -1,9 +1,23 @@
 export default class DB {
   static setAPIUrl(data) {
-    self.apiUrl = data;
+    this.apiUrl = data;
   }
   static async findAll() {
-    const response = await fetch(self.apiUrl + 'todos');
+    const response = await fetch(this.apiUrl + 'todos');
+    return response.json();
+  }
+  static async addNewTodo(content) {
+    const response = await fetch(this.apiUrl + 'todos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: content, completed: false }),
+    });
+    return response.json();
+  }
+  static async deleteTodo(id) {
+    const response = await fetch(this.apiUrl + 'todos/' + id, {
+      method: 'DELETE',
+    });
     return response.json();
   }
 }

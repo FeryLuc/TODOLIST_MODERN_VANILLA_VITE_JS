@@ -7,6 +7,7 @@ export default function getTemplate(todolist) {
           class="new-todo"
           placeholder="What needs to be done?"
           autofocus
+          onchange="window.todolist.addTodo(this)"
         />
       </header>
       <main class="main">
@@ -16,12 +17,12 @@ export default function getTemplate(todolist) {
             >Mark all as complete</label
           >
         </div>
-        <ul class="todo-list">
+        <ul role="todo-list" class="todo-list">
         ${todolist.todos.map((todo) => todo.render()).join(' ')}
         </ul>
       </main>
       <footer class="footer">
-        <span class="todo-count">${todolist.displayItemLeftCount()} item(s) left</span>
+        <span class="todo-count" role="todo-count"><span>${todolist.displayItemLeftCount()}</span> item(s) left</span>
         <ul class="filters">
           <li><a href="#/" class="selected">All</a></li>
           <li><a href="#/active">Active</a></li>
