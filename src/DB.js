@@ -18,6 +18,17 @@ export default class DB {
     const response = await fetch(this.apiUrl + 'todos/' + id, {
       method: 'DELETE',
     });
-    return response.json();
+    return response;
+  }
+  static async updateOne(todo) {
+    const response = await fetch(this.apiUrl + 'todos/' + todo.id, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        content: todo.content,
+        completed: todo.completed,
+      }),
+    });
+    return response;
   }
 }

@@ -18,9 +18,15 @@ export default class Todolist {
   render() {
     this.domEl.innerHTML = getTemplate(this);
   }
+  //Feature item count
   displayItemLeftCount() {
     return this.todos.filter((t) => !t.completed).length;
   }
+  renderItemLeftCount() {
+    this.domEl.querySelector('[role="todo-count"] span').innerText =
+      this.displayItemLeftCount();
+  }
+  //Feature ADD
   addItemIntodos(todo) {
     this.newTodo = new Todo(todo);
     this.todos.push(this.newTodo);
@@ -31,30 +37,44 @@ export default class Todolist {
     todolistEl.append(newLi);
     newLi.outerHTML = this.newTodo.render();
   }
-  renderItemLeftCount() {
-    this.domEl.querySelector('[role="todo-count"] span').innerText =
-      this.displayItemLeftCount();
-  }
+
   async addTodo(input) {
     const dataTodo = await DB.addNewTodo(input.value);
     this.addItemIntodos(dataTodo);
-    // this.render(); au lieu de tout reload je vais cibler la todolist et lui ajouter le render de la dite todo.
     this.addItemInDom();
     this.renderItemLeftCount();
     input.value = '';
   }
-  // async deleteTodo(id) {
-  //   const todo = await DB.deleteTodo(id);
-  //   const todoIndex = todo.id;
-  //   if (todoIndex) {
-  //     this.todos.splice(todoIndex, 1);
-  //     // this.render();
-  //     const liArr = this.domEl.querySelectorAll('li');
-  //     console.log(liArr);
-  //     const lis = Array.from(liArr);
-  //     console.log(lis);
-
-  //     lis.splice(todoIndex, 1);
-  //   }
-  // }
+  //Feature DELETE
+  deleteTodoInTodos(id) {
+    const index = this.todos.findIndex((t) => t.id === id);
+    this.todos.splice(index, 1);
+  }
+  deleteTodoInDOM(id) {
+    this.domEl.querySelector("[data-id='" + id + "']").remove();
+  }
+  async deleteTodo(id) {
+    //supression DB
+    const resp = await DB.deleteTodo(id);
+    console.log(resp);
+    if (resp.ok) {
+      //supr array
+      this.deleteTodoInTodos(id);
+      //supr dom
+      this.deleteTodoInDOM(id);
+      //re render items count
+      this.renderItemLeftCount();
+    }
+  }
+  async toggleCompletedOneById(id) {
+    const todo = this.todos.find((t) => t.id == id);
+    todo.completed = !todo.completed;
+    const resp = await DB.updateOne(todo);
+    if (resp.ok) {
+      this.domEl
+        .querySelector("[data-id='" + id + "']")
+        .classList.toggle('completed');
+      this.renderItemLeftCount();
+    }
+  }
 }
