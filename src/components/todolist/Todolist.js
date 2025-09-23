@@ -66,6 +66,7 @@ export default class Todolist {
       this.renderItemLeftCount();
     }
   }
+  //Feature Toggle Completed
   async toggleCompletedOneById(id) {
     const todo = this.todos.find((t) => t.id == id);
     todo.completed = !todo.completed;
@@ -75,6 +76,22 @@ export default class Todolist {
         .querySelector("[data-id='" + id + "']")
         .classList.toggle('completed');
       this.renderItemLeftCount();
+    }
+  }
+  //Feature UPDATE
+  async updateOneById(id, value) {
+    const todo = this.todos.find((t) => t.id == id);
+    todo.content = value;
+
+    const resp = await DB.updateOne(todo);
+
+    if (resp.ok) {
+      this.domEl
+        .querySelector("[data-id='" + id + "']")
+        .classList.remove('editing');
+
+      this.domEl.querySelector("[data-id='" + id + "'] label").innerText =
+        todo.content;
     }
   }
 }

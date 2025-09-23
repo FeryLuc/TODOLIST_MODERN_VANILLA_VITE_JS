@@ -8,11 +8,15 @@ export default function getTemplate(todo) {
               onchange="window.todolist.toggleCompletedOneById(${
                 todo.id
               }, this.checked)"/>
-              <label>${todo.content}</label>
+              <label ondblclick="this.closest('li').classList.toggle('editing')">${
+                todo.content
+              }</label>
               <button class="destroy" onclick="window.todolist.deleteTodo(${
                 todo.id
               })"></button>
             </div>
-            <input class="edit" value="${todo.content}"/>
+            <input onchange="window.todolist.updateOneById(${
+              todo.id
+            }, this.value)" class="edit" value="${todo.content}"/>
           </li>`;
 }
