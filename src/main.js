@@ -3,5 +3,5 @@ import Todolist from './components/todolist/Todolist.js';
 
 window.todolist = new Todolist({
   el: '#app',
-  apiUrl: 'https://6895f2ee039a1a2b2890ea68.mockapi.io/',
+  apiUrl: 'https://691b0e532d8d7855757146d3.mockapi.io/',
 });
